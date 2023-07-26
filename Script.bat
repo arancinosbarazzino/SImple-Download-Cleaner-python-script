@@ -1,0 +1,1 @@
+wscript.exe "C:\Users\Samu\Documents\vscode\Python\invisible.vbs" C:\Users\Samu\AppData\Local\Microsoft\WindowsApps\python.exe C:\Users\Samu\Documents\vscode\Python\cleanDownloadFolder.py
