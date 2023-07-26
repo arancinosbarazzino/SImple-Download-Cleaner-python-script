@@ -1,20 +1,29 @@
 import os
 import time
 
-DownloadPath="C:/Users/Samu/Downloads/"
+DownloadPath = "C:/Users/Samu/Downloads/"
 
+def numberOfFolders(): #controlla il numero di cartelle da non spostare 
+    i=0
+    f= os.scandir(DownloadPath)
+    for element in f:
+        if os.path.isdir(element.path):
+            i+=1
+    return i
+
+# funzione principale che sposta i file nella cartella e li rinomina se esistono già
 def spostamento(cartella, file):
     print("controllo che non esista già un file con lo stesso nome in " + cartella)
-    trovato=1
-    while(trovato!=0):
-        trovato=0
+    trovato = 1
+    while (trovato != 0):
+        trovato = 0
         f = os.scandir(DownloadPath+cartella)
         for element in f:
             if element.name == file:
                 senzaEstensione = file[:file.rfind('.')] or file
-                estensione= file[file.rfind('.'):]
-                senzaEstensione+=" - 1"
-                file=senzaEstensione+estensione
+                estensione = file[file.rfind('.'):]
+                senzaEstensione += " - 1"
+                file = senzaEstensione+estensione
                 print("cambiato nome del file in " + file)
                 break
     print("sposto " + file + " in " + cartella + "...")
@@ -22,6 +31,8 @@ def spostamento(cartella, file):
               DownloadPath+cartella+file)
     print("fatto")
 
+
+# creazione delle cartelle se non esistono
 if not os.path.exists(DownloadPath+"Immagini"):
     os.mkdir(DownloadPath+"Immagini")
 if not os.path.exists(DownloadPath+"Video"):
@@ -39,16 +50,17 @@ if not os.path.exists(DownloadPath+"Pdf"):
 while True:
     print("controllo nuovi file...")
     NumberOfFiles = len(os.listdir(DownloadPath))
-    time.sleep(150)
+    time.sleep(150)  # zzz
     OldNumber = NumberOfFiles
     NumberOfFiles = len(os.listdir(DownloadPath))
-    if NumberOfFiles != OldNumber:
+    if NumberOfFiles != numberOfFolders():  # controllo se gli unici file presenti sono le cartelle
         print("trovati nuovi file")
         s = os.listdir(DownloadPath)
         for i in s:
             cartella = ""
             temp = i
             temp.lower
+            # questo non fa muovere i file .part e .temp
             if not temp.endswith(".temp") or temp.endswith(".part"):
                 if temp.endswith(".jpg") or temp.endswith(".png") or temp.endswith(".webp") or temp.endswith(".jpeg") or temp.endswith(".heic") or temp.endswith("svg") or temp.endswith(".avif"):
                     cartella = "Immagini/"
@@ -68,7 +80,8 @@ while True:
                 elif temp.endswith(".pdf"):
                     cartella = "Pdf/"
                     spostamento(cartella, i)
-                elif temp.find(".") != -1:
+                # ogni cosa che non ha un punto all'interno del nome
+                elif not os.path.isDir(DownloadPath+i):
                     cartella = "Altro/"
                     spostamento(cartella, i)
     else:
