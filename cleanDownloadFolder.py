@@ -81,7 +81,7 @@ while True:
                     cartella = "Pdf/"
                     spostamento(cartella, i)
                 # ogni cosa che non ha un punto all'interno del nome
-                elif not os.path.isDir(DownloadPath+i):
+                elif not os.path.isdir(DownloadPath+i):
                     cartella = "Altro/"
                     spostamento(cartella, i)
     else:
