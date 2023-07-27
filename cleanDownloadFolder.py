@@ -2,9 +2,15 @@ import os
 import time
 
 DownloadPath = "C:/Users/Samu/Downloads/"
+Folders=["Immagini", "Video", "Exe", "Audio", "Altro", "ZipRar", "Pdf"]
 
+# creazione delle cartelle se non esistono
+for i in Folders:
+    if not os.path.exists(DownloadPath+i):
+        os.mkdir(DownloadPath+i)
 
-def numberOfFolders():  # controlla il numero di cartelle da non spostare
+# controlla il numero di cartelle da non spostare
+def numberOfFolders():  
     i = 0
     f = os.scandir(DownloadPath)
     for element in f:
@@ -13,8 +19,6 @@ def numberOfFolders():  # controlla il numero di cartelle da non spostare
     return i
 
 # funzione principale che sposta i file nella cartella e li rinomina se esistono già
-
-
 def spostamento(cartella, file):
     print("controllo che non esista già un file con lo stesso nome in " + cartella)
     trovato = 1
@@ -46,22 +50,6 @@ def fileTemporanei():
     print("non trovato")
     return ""
 
-
-# creazione delle cartelle se non esistono
-if not os.path.exists(DownloadPath+"Immagini"):
-    os.mkdir(DownloadPath+"Immagini")
-if not os.path.exists(DownloadPath+"Video"):
-    os.mkdir(DownloadPath+"Video")
-if not os.path.exists(DownloadPath+"Exe"):
-    os.mkdir(DownloadPath+"Exe")
-if not os.path.exists(DownloadPath+"Audio"):
-    os.mkdir(DownloadPath+"Audio")
-if not os.path.exists(DownloadPath+"Altro"):
-    os.mkdir(DownloadPath+"Altro")
-if not os.path.exists(DownloadPath+"ZipRar"):
-    os.mkdir(DownloadPath+"ZipRar")
-if not os.path.exists(DownloadPath+"Pdf"):
-    os.mkdir(DownloadPath+"Pdf")
 while True:
     print("controllo nuovi file...")
     NumberOfFiles = len(os.listdir(DownloadPath))
